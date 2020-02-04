@@ -48,7 +48,8 @@ router.post("/", function (req, res, next) {
 });
 
 //GET /questions/:qID
-router.get("/:qID", function (req, res, next) {
+router.post("/:qID", function (req, res, next) {
+    console.log(req.body);
     res.json(req.question);
 });
 

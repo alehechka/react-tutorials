@@ -34,6 +34,12 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.json({
+      message: 'Welcome to the REST API with Express and MongoDB project!',
+    });
+  });
+
 app.use("/questions", routes);
 
 // catch 404 and forward to error handler

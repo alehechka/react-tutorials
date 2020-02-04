@@ -8,7 +8,14 @@ export default ({ component: Component, ...rest }) => {
       { context => (
         <Route
           {...rest}
-          render={}
+          render={props => context.authenticatedUser ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to={{
+              pathname:'/signin',
+              state: { from: props.location},
+            }} />
+          )}
         />
       )}
     </Consumer>
