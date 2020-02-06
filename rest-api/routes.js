@@ -99,4 +99,26 @@ router.post("/:qID/answers/:aID/vote-:dir", function (req, res, next) {
     });
 });
 
-module.exports = router;
+var login = express.Router();
+
+//POST /Login
+login.post("/", function (req, res, next) {
+    // const credentials = {
+    //     request: {
+    //         LoginID: "alehechka",
+    //         Password: "123"
+    //     }
+    // }
+    console.log(req.body);
+    const credentials = {
+        response: {
+            SessionContextId:"101753394eef338d8-26e1-2e93-6314-2f5ef05009b6",
+            InitialBranch:"CENTRALBRNCH",
+            ReturnCode:0,
+            MessageText:""
+        }
+    }
+    res.json(credentials);
+});
+
+module.exports = { router, login };

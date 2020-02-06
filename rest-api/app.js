@@ -3,7 +3,7 @@
 var express = require("express");
 var app = express();
 
-var routes = require('./routes');
+var { router, login } = require('./routes');
 
 var jsonParser = require("body-parser").json;
 var logger = require("morgan");
@@ -24,6 +24,11 @@ db.once("open", async function() {
     console.log("db connection successful");
 });
 
+app.use((req, res, next) => {
+    console.log('\n\n\n\n');
+    next();
+});
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept");
@@ -40,7 +45,8 @@ app.get('/', (req, res) => {
     });
   });
 
-app.use("/questions", routes);
+app.use("/questions", router);
+app.use("/Login", login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
