@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { signUp } from "../../store/actions/authActions";
+import { Redirect } from "react-router-dom";
 
 export class SignUp extends Component {
   state = {
@@ -16,10 +19,13 @@ export class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    this.props.signUp(this.state);
   };
 
   render() {
+    if(this.props.auth.uid) {
+      return <Redirect to="/" />
+    }
     return (
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
@@ -46,6 +52,9 @@ export class SignUp extends Component {
           </div>
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">Sign up</button>
+            <div className="red-text center">
+              {this.props.authError && <p>{this.props.authError}</p>}
+            </div>
           </div>
         </form>
       </div>
@@ -53,4 +62,17 @@ export class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+    authError: state.auth.authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => dispatch(signUp(newUser))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
