@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import moment from "moment";
 
 const ProjectDetails = ({ project }) => {
   if (project) {
@@ -16,7 +17,7 @@ const ProjectDetails = ({ project }) => {
             <div>
               Posted by {project.authorFirstName} {project.authorLastName}
             </div>
-            <div>Created at </div>
+            <div>{moment(project.createdAt?.toDate()).calendar()}</div>
           </div>
         </div>
       </div>
